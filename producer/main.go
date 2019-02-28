@@ -15,15 +15,15 @@ func main() {
 	test := RandStringRunes(*length)
 
 	data := strconv.Itoa(*difficulty) + ":" + test
-	
+
 	var output output
 	if *outputMethod == "stdout" {
-	    output = stdout{data: data}
+		output = stdout{data: data}
 	} else {
-	    output = kafka{data: data}
+		output = kafka{data: data}
 	}
-	
-	output.out()	
+
+	output.out()
 }
 
 func init() {

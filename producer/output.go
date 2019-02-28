@@ -3,21 +3,21 @@ package main
 import "fmt"
 
 type output interface {
-    out()
+	out()
 }
 
 type stdout struct {
-    data string
+	data string
 }
 
 type kafka struct {
-    data string
+	data string
 }
 
 func (s stdout) out() {
-    fmt.Println(s.data)
+	fmt.Println(s.data)
 }
 
 func (s kafka) out() {
-    fmt.Println("Not Implemented")
+	fmt.Println("Not Implemented")
 }
