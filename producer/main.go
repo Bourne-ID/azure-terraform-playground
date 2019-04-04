@@ -8,7 +8,7 @@ import "strconv"
 func main() {
 
 	difficulty := flag.Int("d", 1, "Difficulty for processing challenge")
-	length := flag.Int("l", 1234, "Length of random text to include in message")
+	length := flag.Int("l", 200000, "Length of random text to include in message")
 	outputMethod := flag.String("o", "stdout", "Where to output data [stdout|kafka]")
 
 	flag.Parse()
