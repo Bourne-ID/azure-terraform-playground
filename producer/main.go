@@ -7,23 +7,30 @@ import "strconv"
 
 func main() {
 
-	difficulty := flag.Int("d", 1, "Difficulty for processing challenge")
+	difficulty := flag.Int("diff", 1, "Difficulty for processing challenge")
 	length := flag.Int("l", 200000, "Length of random text to include in message")
-	outputMethod := flag.String("o", "stdout", "Where to output data [stdout|kafka]")
+	outputMethod := flag.String("o", "stdout", "Where to output data [stdout|kafka|bus]")
+	destination := flag.String("dest", "", "Destination of output method")
+	count := flag.Int("c", 1, "Number to produce (0 for unlimited)")
 
 	flag.Parse()
-	test := RandStringRunes(*length)
 
-	data := strconv.Itoa(*difficulty) + ":" + test
+	for i := 0; *count == 0 || i < *count; i++ {
 
-	var output output
-	if *outputMethod == "stdout" {
-		output = stdout{data: data}
-	} else {
-		output = kafka{data: data}
+		test := RandStringRunes(*length)
+
+		data := strconv.Itoa(*difficulty) + ":" + test
+
+		var output output
+		if *outputMethod == "stdout" {
+			output = stdout{data: data}
+		} else if *outputMethod == "kafka" {
+			output = kafka{data: data}
+		} else {
+			output = bus{data: data, destination: *destination}
+		}
+		output.out()
 	}
-
-	output.out()
 }
 
 func init() {
